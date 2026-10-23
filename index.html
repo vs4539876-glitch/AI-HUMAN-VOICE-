@@ -3,324 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Voice Studio Express & Voice Cloner</title>
+    <title>Easy AI Voice Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #0b0f17;
-            color: #f3f4f6;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-        .glass-box {
-            background: rgba(17, 24, 39, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.6);
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(245, 158, 11, 0.4);
-            border-radius: 4px;
-        }
+        body { background-color: #0b0f17; color: #f3f4f6; font-family: sans-serif; }
+        .box { background: rgba(17, 24, 39, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between p-4 md:p-8">
+<body class="min-h-screen p-4 md:p-8 flex flex-col justify-between max-w-xl mx-auto">
 
     <!-- Header -->
-    <header class="max-w-4xl mx-auto w-full flex items-center justify-between mb-6">
-        <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-microphone-lines"></i>
-            </div>
-            <div>
-                <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-                    AI Voice Studio <span class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full border border-amber-500/30">PRO</span>
-                </h1>
-                <p class="text-xs text-gray-400">Voice Cloning, Multi-Voice Library & Auto-Translate</p>
-            </div>
-        </div>
-        <div id="statusBadge" class="hidden text-xs bg-amber-500/10 text-amber-400 px-3 py-1.5 rounded-full border border-amber-500/20 items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-            <span id="statusText">Processing...</span>
-        </div>
+    <header class="text-center mb-6">
+        <h1 class="text-xl font-bold text-amber-400">Easy AI Voice Studio</h1>
+        <p class="text-xs text-gray-400">Simple, Fast & 100% Working Buttons</p>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-4xl mx-auto w-full flex-1 flex flex-col gap-6">
+    <!-- Main Section -->
+    <main class="flex flex-col gap-4 flex-1">
+        
+        <!-- Script Box -->
+        <div class="box rounded-2xl p-4 shadow-lg">
+            <label class="block text-xs font-semibold text-gray-300 mb-2">Apni Script Yahan Likhein:</label>
+            <textarea id="scriptInput" rows="4" placeholder="Kuch bhi likhein (Hindi ya English)..." class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-gray-100 placeholder-gray-500 focus:outline-none focus:border-amber-500 text-sm"></textarea>
+            <div class="text-right text-[10px] text-gray-500 mt-1" id="charCount">0 characters</div>
+        </div>
 
-        <!-- Script Input Section -->
-        <div class="glass-box rounded-2xl p-5 shadow-xl">
-            <label class="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
-                <i class="fa-solid fa-pen-to-square text-amber-400"></i> Write Your Script (हिंदी / English / Any Language)
-            </label>
-            <textarea id="scriptInput" rows="4" placeholder="अपनी स्क्रिप्ट यहाँ लिखें... (e.g. Namaste dosto, aaj ke video me aapka swagat hai...)" class="w-full bg-gray-900/80 border border-gray-700/80 rounded-xl p-3 text-gray-100 placeholder-gray-500 resize-none focus:outline-none focus:border-amber-500 text-base md:text-lg transition"></textarea>
-            <div class="flex justify-between items-center pt-3 border-t border-gray-800 text-xs text-gray-400 mt-2">
-                <span id="charCount">0 / 3000 characters</span>
-                <span class="flex items-center gap-1 text-emerald-400"><i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Translate Active</span>
+        <!-- Voice & Speed Settings -->
+        <div class="box rounded-2xl p-4 shadow-lg flex flex-col gap-3">
+            <div>
+                <label class="block text-xs font-semibold text-gray-300 mb-1">Voice Type Chunein:</label>
+                <select id="voiceType" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-sm text-gray-200 focus:outline-none focus:border-amber-500">
+                    <option value="female">Natural Female Voice (Mahila Awaaz)</option>
+                    <option value="male">Natural Male Voice (Purush Awaaz)</option>
+                </select>
+            </div>
+
+            <div>
+                <div class="flex justify-between text-xs text-gray-300 mb-1">
+                    <span>Speed (Bolne ki Raftaar):</span>
+                    <span id="speedText" class="text-amber-400 font-bold">1.0x</span>
+                </div>
+                <input type="range" id="speedRange" min="0.5" max="1.5" step="0.1" value="1.0" class="w-full accent-amber-500">
             </div>
         </div>
 
-        <!-- Controls: Speed Slider -->
-        <div class="glass-box rounded-2xl p-4 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="w-full flex-1">
-                <div class="flex justify-between items-center mb-1 text-xs text-gray-300">
-                    <span class="font-medium"><i class="fa-solid fa-gauge-high text-amber-400"></i> Speaking Speed (बोलने की स्पीड):</span>
-                    <span id="speedVal" class="font-bold text-amber-400">1.0x</span>
-                </div>
-                <input type="range" id="speedSlider" min="0.5" max="2.0" step="0.05" value="1.0" class="w-full accent-amber-500 bg-gray-800 rounded-lg h-2 cursor-pointer">
-            </div>
-            
-            <div class="w-full flex-1">
-                <div class="flex justify-between items-center mb-1 text-xs text-gray-300">
-                    <span class="font-medium"><i class="fa-solid fa-sliders text-amber-400"></i> Voice Pitch Adjustment:</span>
-                    <span id="pitchVal" class="font-bold text-amber-400">1.0</span>
-                </div>
-                <input type="range" id="pitchSlider" min="0.5" max="1.5" step="0.05" value="1.0" class="w-full accent-amber-500 bg-gray-800 rounded-lg h-2 cursor-pointer">
-            </div>
-        </div>
-
-        <!-- Voice Selection Hub -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            <!-- My Cloned Voices Section -->
-            <div class="glass-box rounded-2xl p-5 shadow-xl flex flex-col justify-between border-l-4 border-l-amber-500">
-                <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h2 class="text-base font-bold text-amber-400 flex items-center gap-2">
-                            <i class="fa-solid fa-fingerprint"></i> My Saved Cloned Voices
-                        </h2>
-                        <span id="clonedCount" class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">0 Voices Saved</span>
-                    </div>
-
-                    <!-- List of Saved Cloned Voices -->
-                    <div id="clonedVoiceList" class="max-h-40 overflow-y-auto custom-scrollbar space-y-2 mb-4 pr-1">
-                        <p class="text-xs text-gray-500 italic text-center py-4">कोई भी सेव की गई आवाज़ नहीं मिली। नीचे रिकॉर्ड/अपलोड करके सेव करें।</p>
-                    </div>
-                </div>
-
-                <!-- Record / Add New Voice Form -->
-                <div class="pt-3 border-t border-gray-800">
-                    <button onclick="toggleAddVoiceModal()" class="w-full py-2.5 px-4 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 font-medium rounded-xl transition text-sm flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-plus"></i> Add New Voice Sample (नई आवाज़ जोड़ें)
-                    </button>
-                </div>
-            </div>
-
-            <!-- Built-In Human AI Voices (10 Male / 10 Female) -->
-            <div class="glass-box rounded-2xl p-5 shadow-xl flex flex-col justify-between border-l-4 border-l-blue-500">
-                <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h2 class="text-base font-bold text-blue-400 flex items-center gap-2">
-                            <i class="fa-solid fa-users text-blue-400"></i> Select AI Voice Profile
-                        </h2>
-                        <div class="flex gap-1 text-xs">
-                            <button id="tabFemaleBtn" onclick="switchGenderTab('female')" class="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-medium">10 Female</button>
-                            <button id="tabMaleBtn" onclick="switchGenderTab('male')" class="px-2.5 py-1 rounded-lg bg-gray-800 text-gray-400 font-medium hover:text-white">10 Male</button>
-                        </div>
-                    </div>
-
-                    <!-- AI Voices List -->
-                    <div id="aiVoiceList" class="max-h-48 overflow-y-auto custom-scrollbar space-y-2 mb-2 pr-1">
-                        <!-- Populated dynamically via JS -->
-                    </div>
-                </div>
-
-                <div class="text-xs text-gray-500 text-right pt-2 border-t border-gray-800">
-                    Active: <span id="activeVoiceLabel" class="text-blue-400 font-medium">Female - Priya (Expressive)</span>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Action Buttons (Speak in Hindi / Speak in English) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <button onclick="processAndSpeak('hi')" class="py-4 px-6 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 active:scale-[0.99] text-white font-semibold rounded-2xl shadow-lg shadow-orange-600/25 transition flex items-center justify-center gap-3 text-lg">
-                <i class="fa-solid fa-language text-2xl"></i>
-                <div class="text-left">
-                    <div class="text-xs opacity-80 uppercase tracking-wider">Auto-Translate & Speak in</div>
-                    <div>Hindi (हिंदी में बोले)</div>
-                </div>
+        <!-- Action Buttons -->
+        <div class="grid grid-cols-2 gap-3">
+            <button onclick="speakText('hi')" class="py-3 px-4 bg-orange-600 hover:bg-orange-500 text-white font-semibold rounded-xl shadow transition text-sm flex items-center justify-center gap-2">
+                <i class="fa-solid fa-volume-high"></i> Hindi Me Bole
             </button>
-
-            <button onclick="processAndSpeak('en')" class="py-4 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:scale-[0.99] text-white font-semibold rounded-2xl shadow-lg shadow-blue-600/25 transition flex items-center justify-center gap-3 text-lg">
-                <i class="fa-solid fa-globe text-2xl"></i>
-                <div class="text-left">
-                    <div class="text-xs opacity-80 uppercase tracking-wider">Auto-Translate & Speak in</div>
-                    <div>English (इंग्लिश में बोले)</div>
-                </div>
+            <button onclick="speakText('en')" class="py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow transition text-sm flex items-center justify-center gap-2">
+                <i class="fa-solid fa-language"></i> English Me Bole
             </button>
         </div>
 
-        <!-- Audio Output Status & Wave Visualizer -->
-        <div class="glass-box rounded-2xl p-5 shadow-xl flex flex-col gap-3">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2 text-xs font-medium text-emerald-400">
-                    <span id="visualizerDot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 opacity-40"></span>
-                    <span id="audioStatus">Audio Engine Ready</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="pauseAudio()" class="p-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-xs transition" title="Pause"><i class="fa-solid fa-pause"></i></button>
-                    <button onclick="stopAudio()" class="p-2 bg-red-950/40 hover:bg-red-900/60 text-red-400 rounded-lg text-xs transition" title="Stop"><i class="fa-solid fa-square"></i> Stop</button>
-                </div>
-            </div>
-
-            <div class="h-16 bg-gray-950/80 rounded-xl overflow-hidden relative flex items-center justify-center border border-gray-800">
-                <canvas id="waveformCanvas" class="w-full h-full"></canvas>
-            </div>
-        </div>
+        <!-- Stop Button -->
+        <button onclick="stopSpeech()" class="py-2.5 px-4 bg-red-950/50 hover:bg-red-900 text-red-400 border border-red-800/50 rounded-xl transition text-xs flex items-center justify-center gap-2">
+            <i class="fa-solid fa-square"></i> Audio Roko (Stop)
+        </button>
 
     </main>
 
-    <!-- Modal: Add / Record New Voice Sample -->
-    <div id="addVoiceModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="glass-box rounded-2xl p-6 max-w-md w-full border border-gray-700 shadow-2xl relative">
-            <button onclick="toggleAddVoiceModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            
-            <h3 class="text-lg font-bold text-amber-400 mb-1 flex items-center gap-2">
-                <i class="fa-solid fa-microphone text-amber-400"></i> Save New Voice Profile
-            </h3>
-            <p class="text-xs text-gray-400 mb-4">अपनी आवाज़ का सैंपल रिकॉर्ड करें या ऑडियो फाइल अपलोड करें।</p>
-
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-medium text-gray-300 mb-1">Speaker Name (व्यक्ति का नाम):</label>
-                    <input type="text" id="speakerNameInput" placeholder="e.g. Meri Awaaz, Sanjeev Voice..." class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3 py-2 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-amber-500">
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <button id="modalRecordBtn" onclick="toggleModalRecording()" class="py-3 px-3 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-xl border border-gray-700 transition flex items-center justify-center gap-2 text-xs">
-                        <i class="fa-solid fa-microphone text-red-500" id="modalMicIcon"></i>
-                        <span id="modalRecordBtnText">Record Sample</span>
-                    </button>
-
-                    <label class="py-3 px-3 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-xl border border-gray-700 transition flex items-center justify-center gap-2 text-xs cursor-pointer">
-                        <i class="fa-solid fa-upload text-blue-400"></i>
-                        <span>Upload Audio File</span>
-                        <input type="file" id="modalAudioUpload" accept="audio/*" onchange="handleModalAudioUpload(event)" class="hidden">
-                    </label>
-                </div>
-
-                <div id="samplePreviewBox" class="hidden bg-gray-900/60 p-3 rounded-xl border border-gray-800">
-                    <span class="text-xs text-emerald-400 block mb-1">Sample Captured Successfully ✅</span>
-                    <audio id="modalSamplePlayer" controls class="w-full h-8"></audio>
-                </div>
-
-                <button onclick="submitAndSaveVoice()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/20 transition flex items-center justify-center gap-2 text-sm">
-                    <i class="fa-solid fa-cloud-arrow-up"></i> Submit & Save Voice Sample
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <footer class="max-w-4xl mx-auto w-full text-center text-xs text-gray-600 mt-6">
-        AI Voice Studio Express • Permanent Local Storage & Natural Timbre Matching
+    <footer class="text-center text-[10px] text-gray-600 mt-6">
+        Easy Voice App • No Complicated Setup
     </footer>
 
-    <!-- Logic Script -->
+    <!-- Simple Script -->
     <script>
-        // Global State & Database Setup
-        let db = null;
-        let selectedVoiceType = 'ai'; // 'ai' or 'cloned'
-        let activeAiVoiceId = 'f1';
-        let activeClonedVoiceId = null;
-        let activeGenderTab = 'female';
-        
-        let mediaRecorder = null;
-        let audioChunks = [];
-        let currentModalBlob = null;
-        let currentAudio = null;
-
-        // Element References
         const scriptInput = document.getElementById('scriptInput');
         const charCount = document.getElementById('charCount');
-        const speedSlider = document.getElementById('speedSlider');
-        const speedVal = document.getElementById('speedVal');
-        const pitchSlider = document.getElementById('pitchSlider');
-        const pitchVal = document.getElementById('pitchVal');
-        const statusBadge = document.getElementById('statusBadge');
-        const statusText = document.getElementById('statusText');
-        const audioStatus = document.getElementById('audioStatus');
-        const visualizerDot = document.getElementById('visualizerDot');
-        const canvas = document.getElementById('waveformCanvas');
-        const ctx = canvas.getContext('2d');
+        const speedRange = document.getElementById('speedRange');
+        const speedText = document.getElementById('speedText');
 
-        // AI Voice Library (10 Female, 10 Male)
-        const aiVoices = {
-            female: [
-                { id: 'f1', name: 'Priya', style: 'Expressive / Warm', pitch: 1.15, rate: 0.98, lang: 'hi-IN' },
-                { id: 'f2', name: 'Ananya', style: 'Soft & Clear', pitch: 1.25, rate: 0.95, lang: 'hi-IN' },
-                { id: 'f3', name: 'Kavya', style: 'News Anchor', pitch: 1.05, rate: 1.05, lang: 'hi-IN' },
-                { id: 'f4', name: 'Neha', style: 'Casual / Energetic', pitch: 1.20, rate: 1.02, lang: 'hi-IN' },
-                { id: 'f5', name: 'Riya', style: 'Storyteller', pitch: 1.10, rate: 0.90, lang: 'hi-IN' },
-                { id: 'f6', name: 'Sophia', style: 'US Accent Smooth', pitch: 1.18, rate: 0.98, lang: 'en-US' },
-                { id: 'f7', name: 'Emma', style: 'Corporate Clear', pitch: 1.10, rate: 1.00, lang: 'en-US' },
-                { id: 'f8', name: 'Aaradhya', style: 'Deep Soft', pitch: 0.98, rate: 0.92, lang: 'hi-IN' },
-                { id: 'f9', name: 'Pooja', style: 'Friendly Podcast', pitch: 1.15, rate: 0.96, lang: 'hi-IN' },
-                { id: 'f10', name: 'Sita', style: 'Traditional Calm', pitch: 1.05, rate: 0.88, lang: 'hi-IN' }
-            ],
-            male: [
-                { id: 'm1', name: 'Rohan', style: 'Deep Voice Anchor', pitch: 0.82, rate: 0.95, lang: 'hi-IN' },
-                { id: 'm2', name: 'Aarav', style: 'Youthful & Energetic', pitch: 0.98, rate: 1.02, lang: 'hi-IN' },
-                { id: 'm3', name: 'Sanjeev', style: 'Professional Narrator', pitch: 0.88, rate: 0.92, lang: 'hi-IN' },
-                { id: 'm4', name: 'Vikram', style: 'Bold & Strong', pitch: 0.75, rate: 0.98, lang: 'hi-IN' },
-                { id: 'm5', name: 'Kabir', style: 'Conversational', pitch: 0.92, rate: 1.00, lang: 'hi-IN' },
-                { id: 'm6', name: 'Alex', style: 'US Business Lead', pitch: 0.90, rate: 1.00, lang: 'en-US' },
-                { id: 'm7', name: 'David', style: 'Documentary Voice', pitch: 0.80, rate: 0.90, lang: 'en-US' },
-                { id: 'm8', name: 'Aditya', style: 'Tech Reviewer', pitch: 0.95, rate: 1.05, lang: 'hi-IN' },
-                { id: 'm9', name: 'Rahul', style: 'Smooth Radio DJ', pitch: 0.85, rate: 0.96, lang: 'hi-IN' },
-                { id: 'm10', name: 'Amit', style: 'Calm Instructor', pitch: 0.88, rate: 0.90, lang: 'hi-IN' }
-            ]
-        };
+        speedRange.addEventListener('input', (e) => {
+            speedText.innerText = e.target.value + 'x';
+        });
 
-        // Initialize IndexedDB for permanent local storage
-        function initDB() {
-            const request = indexedDB.open('AIVoiceStudioDB', 1);
-            request.onupgradeneeded = (e) => {
-                db = e.target.result;
-                if (!db.objectStoreNames.contains('clonedVoices')) {
-                    db.createObjectStore('clonedVoices', { keyPath: 'id', autoIncrement: true });
-                }
-            };
-            request.onsuccess = (e) => {
-                db = e.target.result;
-                loadSavedClonedVoices();
-            };
+        scriptInput.addEventListener('input', () => {
+            charCount.innerText = scriptInput.value.length + ' characters';
+        });
+
+        async function translateText(text, targetLang) {
+            try {
+                const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);
+                const data = await res.json();
+                let translated = "";
+                data[0].forEach(item => { if (item[0]) translated += item[0]; });
+                return translated;
+            } catch (err) {
+                return text;
+            }
         }
-        initDB();
 
-        // Range Sliders Event Listeners
-        speedSlider.addEventListener('input', (e) => speedVal.innerText = `${e.target.value}x`);
-        pitchSlider.addEventListener('input', (e) => pitchVal.innerText = e.target.value);
-        scriptInput.addEventListener('input', () => charCount.innerText = `${scriptInput.value.length} / 3000 characters`);
+        async function speakText(targetLang) {
+            const text = scriptInput.value.trim();
+            if (!text) {
+                alert('Kripya pehle kuch script ya text likhein!');
+                return;
+            }
 
-        // Render AI Voice List
-        function renderAiVoices() {
-            const container = document.getElementById('aiVoiceList');
-            const list = aiVoices[activeGenderTab];
-            container.innerHTML = list.map(v => `
-                <div onclick="selectAiVoice('${v.id}')" class="p-2.5 rounded-xl border transition cursor-pointer flex items-center justify-between ${selectedVoiceType === 'ai' && activeAiVoiceId === v.id ? 'bg-blue-600/20 border-blue-500 text-white' : 'bg-gray-900/60 border-gray-800 text-gray-300 hover:bg-gray-800/80'}">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 text-xs font-bold">
-                            ${v.name[0]}
-                        </div>
-                        <div>
-                            <div class="text-xs font-semibold">${v.name}</div>
-                            <div class="text-[10px] text-gray-400">${v.style}</div>
-                        </div>
-                    </div>
-                    <button onclick="event.stopPropagation(); previewAiVoice('${v.id}')" class="p-1.5 bg-gray-800 hover:bg-blue-600 text-gray-300 hover:text-white rounded-lg text-[10px] transition" title="Preview Sample">
-                        <i class="fa-solid fa-volume-high"></i>
-                    </button>
-                </div>
-            `).join('');
+            window.speechSynthesis.cancel();
+
+            // Auto-translate text
+            const translated = await translateText(text, targetLang);
+
+            const utterance = new SpeechSynthesisUtterance(translated);
+            utterance.lang = targetLang === 'hi' ? 'hi-IN' : 'en-US';
+            utterance.rate = parseFloat(speedRange.value);
+
+            const voiceType = document.getElementById('voiceType').value;
+            if (voiceType === 'female') {
+                utterance.pitch = 1.2; // Higher pitch for female tone
+            } else {
+                utterance.pitch = 0.8; // Lower pitch for male tone
+            }
+
+            // Select best available voice from device
+            const voices = window.speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                const found = voices.find(v => v.lang.toLowerCase().includes(targetLang === 'hi' ? 'hi' : 'en'));
+                if (found) utterance.voice = found;
+            }
+
+            window.speechSynthesis.speak(utterance);
         }
-        renderAiVoices();
 
-        function switchGenderTab(gender) {
-            activeGenderTab = gender;
-            document.getElementById('tabFemaleBtn').
+        function stopSpeech() {
+            window.speechSynthesis.cancel();
+        }
+    </script>
+</body>
+</html>
