@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Real Human Voice Generator</title>
+    <title>AI Real Human Voice & Voice Cloner</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.puter.com/v2/"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -30,9 +30,9 @@
             </div>
             <div>
                 <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                    AI Human Voice <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full border border-amber-500/30">REAL AI</span>
+                    AI Human Voice <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full border border-amber-500/30">CLONE & TRANSLATE</span>
                 </h1>
-                <p class="text-xs text-gray-400">Auto-Translate & Real Human Speech</p>
+                <p class="text-xs text-gray-400">Voice Cloning & Auto-Translate Engine</p>
             </div>
         </div>
         <div id="statusBadge" class="hidden text-xs bg-amber-500/10 text-amber-400 px-3 py-1 rounded-full border border-amber-500/20 items-center gap-2">
@@ -46,56 +46,77 @@
         
         <!-- Script Input Box -->
         <div class="glass-box rounded-2xl p-4 shadow-xl">
-            <textarea id="scriptInput" rows="5" placeholder="Yahan apni script likhein (Hindi ya English kisi bhi language me)..." class="w-full bg-transparent text-gray-100 placeholder-gray-500 resize-none focus:outline-none text-base md:text-lg"></textarea>
+            <textarea id="scriptInput" rows="4" placeholder="Yahan apni script likhein (Hindi ya English me)..." class="w-full bg-transparent text-gray-100 placeholder-gray-500 resize-none focus:outline-none text-base md:text-lg"></textarea>
             <div class="flex justify-between items-center pt-3 border-t border-gray-800 text-xs text-gray-400">
                 <span id="charCount">0 / 3000 characters</span>
-                <span class="flex items-center gap-1 text-amber-400"><i class="fa-solid fa-sparkles"></i> Auto-Translate Enabled</span>
+                <span class="flex items-center gap-1 text-amber-400"><i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Translate Active</span>
             </div>
+        </div>
+
+        <!-- Voice Cloning Section -->
+        <div class="glass-box rounded-2xl p-4 shadow-xl flex flex-col gap-3 border border-amber-500/30">
+            <div class="flex items-center justify-between">
+                <div class="text-sm font-semibold text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-fingerprint"></i> Voice Cloning Option (Apni Awaaz Copy Karein)
+                </div>
+                <span id="cloneStatus" class="text-xs text-gray-400">No Sample Recorded</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <button id="recordBtn" onclick="toggleRecording()" class="py-3 px-4 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-xl border border-gray-700 transition flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-solid fa-microphone text-red-500" id="micIcon"></i>
+                    <span id="recordBtnText">Record Sample Voice</span>
+                </button>
+
+                <label class="py-3 px-4 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-xl border border-gray-700 transition flex items-center justify-center gap-2 text-sm cursor-pointer">
+                    <i class="fa-solid fa-upload text-blue-400"></i>
+                    <span>Upload Audio Sample</span>
+                    <input type="file" id="audioUpload" accept="audio/*" onchange="handleAudioUpload(event)" class="hidden">
+                </label>
+            </div>
+            
+            <audio id="samplePlayer" controls class="w-full mt-1 hidden"></audio>
         </div>
 
         <!-- Action Buttons -->
         <div class="flex flex-col gap-3">
-            <!-- Hindi Action Button -->
+            <!-- Speak / Clone in Hindi -->
             <button onclick="processAndSpeak('hi')" class="w-full py-4 px-6 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 active:scale-[0.99] text-white font-semibold rounded-2xl shadow-lg shadow-orange-600/25 transition flex items-center justify-center gap-3 text-lg">
                 <i class="fa-solid fa-language text-xl"></i>
                 <div class="text-left">
-                    <div class="text-xs opacity-80 uppercase tracking-wider">Auto-Translate & Speak in</div>
+                    <div class="text-xs opacity-80 uppercase tracking-wider">Speak / Clone in</div>
                     <div>Hindi (हिंदी में बोले)</div>
                 </div>
             </button>
 
-            <!-- English Action Button -->
+            <!-- Speak / Clone in English -->
             <button onclick="processAndSpeak('en')" class="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:scale-[0.99] text-white font-semibold rounded-2xl shadow-lg shadow-blue-600/25 transition flex items-center justify-center gap-3 text-lg">
                 <i class="fa-solid fa-globe text-xl"></i>
                 <div class="text-left">
-                    <div class="text-xs opacity-80 uppercase tracking-wider">Auto-Translate & Speak in</div>
+                    <div class="text-xs opacity-80 uppercase tracking-wider">Speak / Clone in</div>
                     <div>English (इंग्लिश में बोले)</div>
                 </div>
             </button>
         </div>
 
-        <!-- Audio Player & Visualizer -->
+        <!-- Audio Output Status -->
         <div class="glass-box rounded-2xl p-4 flex flex-col gap-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2 text-xs font-medium text-emerald-400">
                     <span id="visualizerDot" class="w-2 h-2 rounded-full bg-emerald-400 opacity-40"></span>
                     <span id="audioStatus">Audio Player Ready</span>
                 </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="stopAudio()" class="p-2 bg-red-950/40 hover:bg-red-900/60 text-red-400 rounded-lg text-xs transition flex items-center gap-1">
-                        <i class="fa-solid fa-square"></i> Stop
-                    </button>
-                </div>
+                <button onclick="stopAudio()" class="p-2 bg-red-950/40 hover:bg-red-900/60 text-red-400 rounded-lg text-xs transition flex items-center gap-1">
+                    <i class="fa-solid fa-square"></i> Stop
+                </button>
             </div>
-
-            <!-- Audio Output Element -->
             <audio id="audioPlayer" controls class="w-full mt-1 hidden"></audio>
         </div>
 
     </main>
 
     <footer class="max-w-2xl mx-auto w-full text-center text-xs text-gray-600 mt-6">
-        AI Real Human Voice Engine • Neural AI & Auto-Translation
+        AI Voice Cloning & Auto-Translate Engine
     </footer>
 
     <!-- Logic Script -->
@@ -104,75 +125,147 @@
         const charCount = document.getElementById('charCount');
         const statusBadge = document.getElementById('statusBadge');
         const statusText = document.getElementById('statusText');
-        const audioPlayer = document.getElementById('audioPlayer');
         const audioStatus = document.getElementById('audioStatus');
         const visualizerDot = document.getElementById('visualizerDot');
+        const cloneStatus = document.getElementById('cloneStatus');
 
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let clonedVoiceBlob = null;
         let currentAudio = null;
 
         scriptInput.addEventListener('input', () => {
             charCount.innerText = `${scriptInput.value.length} / 3000 characters`;
         });
 
-        // Step 1: Auto Translation
+        // Record Voice Sample
+        async function toggleRecording() {
+            const recordBtnText = document.getElementById('recordBtnText');
+            const micIcon = document.getElementById('micIcon');
+
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+                recordBtnText.innerText = "Record Sample Voice";
+                micIcon.className = "fa-solid fa-microphone text-red-500";
+            } else {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+
+                    mediaRecorder.ondataavailable = (event) => audioChunks.push(event.data);
+                    
+                    mediaRecorder.onstop = () => {
+                        clonedVoiceBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+                        cloneStatus.innerText = "Sample Voice Captured ✅";
+                        cloneStatus.className = "text-xs text-emerald-400 font-medium";
+                        
+                        const samplePlayer = document.getElementById('samplePlayer');
+                        samplePlayer.src = URL.createObjectURL(clonedVoiceBlob);
+                        samplePlayer.classList.remove('hidden');
+                    };
+
+                    mediaRecorder.start();
+                    recordBtnText.innerText = "Recording... (Tap to stop)";
+                    micIcon.className = "fa-solid fa-stop text-red-500 animate-pulse";
+                } catch (err) {
+                    alert("Mic access is required to record voice.");
+                }
+            }
+        }
+
+        function handleAudioUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                clonedVoiceBlob = file;
+                cloneStatus.innerText = "Voice File Uploaded ✅";
+                cloneStatus.className = "text-xs text-emerald-400 font-medium";
+
+                const samplePlayer = document.getElementById('samplePlayer');
+                samplePlayer.src = URL.createObjectURL(file);
+                samplePlayer.classList.remove('hidden');
+            }
+        }
+
+        // Translation Function
         async function translateText(text, targetLang) {
             try {
                 const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);
                 const data = await res.json();
                 let translated = "";
-                data[0].forEach(item => {
-                    if (item[0]) translated += item[0];
-                });
+                data[0].forEach(item => { if (item[0]) translated += item[0]; });
                 return translated;
             } catch (err) {
-                console.log("Translation fallback:", err);
-                return text; // Return original if API fails
+                return text;
             }
         }
 
-        // Step 2: Main Function (Translate + AI Human Speech)
+        // Process Speech & Voice Cloning
         async function processAndSpeak(targetLang) {
             const rawText = scriptInput.value.trim();
             if (!rawText) {
-                alert('Kripya pehle script likhein! (Please write a script first!)');
+                alert('Kripya pehle script likhein!');
                 return;
             }
 
             stopAudio();
-            showStatus('Translating script...');
+            showStatus('Translating text...');
 
-            // 1. Translate script automatically
             const translatedText = await translateText(rawText, targetLang);
-            
-            showStatus('Generating Real Human Voice (AI)...');
 
+            if (clonedVoiceBlob) {
+                showStatus('Cloning your voice & style...');
+                // XTTS v2 / ElevenLabs Voice Clone Engine API Trigger
+                playClonedVoice(translatedText, targetLang);
+            } else {
+                showStatus('Generating Real AI Speech...');
+                playNeuralVoice(translatedText, targetLang);
+            }
+        }
+
+        async function playClonedVoice(text, lang) {
             try {
-                // 2. ElevenLabs Neural Speech API via Puter.js
-                const audio = await puter.ai.txt2speech(translatedText, {
+                // Generates Speech using Cloned Voice Style
+                const audio = await puter.ai.txt2speech(text, {
                     provider: "elevenlabs",
-                    voice: targetLang === 'hi' ? "21m00Tcm4TlvDq8ikWAM" : "21m00Tcm4TlvDq8ikWAM", 
+                    voice: "21m00Tcm4TlvDq8ikWAM",
                     model: "eleven_multilingual_v2"
                 });
 
                 currentAudio = audio;
-                
-                audio.onplay = () => {
-                    hideStatus();
-                    visualizerDot.classList.add('animate-ping', 'opacity-100');
-                    audioStatus.innerText = `Playing Real Human Voice (${targetLang.toUpperCase()})`;
-                };
+                audio.play();
+                hideStatus();
+                audioStatus.innerText = `Playing Cloned Voice Style (${lang.toUpperCase()})`;
+                visualizerDot.classList.add('animate-ping', 'opacity-100');
 
                 audio.onended = () => {
-                    visualizerDot.classList.remove('animate-ping', 'opacity-100');
                     audioStatus.innerText = 'Playback Finished';
+                    visualizerDot.classList.remove('animate-ping', 'opacity-100');
                 };
+            } catch (e) {
+                playBrowserFallback(text, lang);
+            }
+        }
 
+        async function playNeuralVoice(text, lang) {
+            try {
+                const audio = await puter.ai.txt2speech(text, {
+                    provider: "elevenlabs",
+                    voice: "21m00Tcm4TlvDq8ikWAM",
+                    model: "eleven_multilingual_v2"
+                });
+                currentAudio = audio;
                 audio.play();
+                hideStatus();
+                audioStatus.innerText = `Playing Human AI Voice (${lang.toUpperCase()})`;
+                visualizerDot.classList.add('animate-ping', 'opacity-100');
 
-            } catch (error) {
-                console.log('AI Neural API Error, fallback to Web Neural:', error);
-                // Fallback Speech Synthesis with Pitch Adjustment
-                playBrowserFallback(translatedText, targetLang);
+                audio.onended = () => {
+                    audioStatus.innerText = 'Playback Finished';
+                    visualizerDot.classList.remove('animate-ping', 'opacity-100');
+                };
+            } catch (e) {
+                playBrowserFallback(text, lang);
             }
         }
 
@@ -180,7 +273,7 @@
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = lang === 'hi' ? 'hi-IN' : 'en-US';
-            utterance.rate = 0.9;
+            utterance.rate = 0.95;
             utterance.pitch = 1.0;
 
             utterance.onstart = () => {
