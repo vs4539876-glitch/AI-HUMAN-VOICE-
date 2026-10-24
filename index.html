@@ -20,4 +20,514 @@
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top right,#1
+  background: radial-gradient(circle at top right,#1a3158 0,#0b1020 48%);
+  font-family: system-ui, sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.wrap {
+  max-width: 820px;
+  margin: auto;
+  padding: 22px 15px 40px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg,var(--orange),var(--blue));
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+}
+
+.brand h1 { font-size: 20px; margin: 0; }
+
+.brand p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.hero {
+  padding: 23px 20px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: linear-gradient(130deg,#172746,#172034);
+  margin-bottom: 16px;
+}
+
+.tag {
+  display: inline-block;
+  color: #ffd1a3;
+  background: #63371655;
+  border: 1px solid #96551f;
+  padding: 5px 9px;
+  border-radius: 99px;
+  font-size: 12px;
+}
+
+.hero h2 {
+  font-size: 26px;
+  line-height: 1.2;
+  margin: 14px 0 8px;
+}
+
+.hero p {
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.card {
+  background: #111a2d;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  margin: 14px 0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 13px;
+  font-size: 17px;
+}
+
+.num {
+  display: grid;
+  place-items: center;
+  background: #ff8a2424;
+  color: #ffb66f;
+  width: 31px;
+  height: 31px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  color: #c8d2e6;
+  margin: 12px 0 7px;
+}
+
+input, textarea, select {
+  width: 100%;
+  background: #0a1120;
+  color: var(--text);
+  border: 1px solid #33415d;
+  border-radius: 11px;
+  padding: 12px;
+  font: inherit;
+  outline: none;
+}
+
+textarea {
+  min-height: 125px;
+  resize: vertical;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--blue);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn {
+  border: 0;
+  border-radius: 11px;
+  padding: 12px 15px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(100deg,var(--orange),#ff6b35);
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn.secondary {
+  background: #1c2a45;
+  border: 1px solid #3a4b6c;
+}
+
+.btn.blue {
+  background: linear-gradient(100deg,#4f8cff,#3763d6);
+}
+
+.btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.status {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #b9c7df;
+  margin-top: 10px;
+}
+
+.notice {
+  padding: 12px;
+  border-radius: 12px;
+  background: #3b2c1555;
+  border: 1px solid #80551f;
+  color: #ffdfb8;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 12px;
+}
+
+.fine {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.audio {
+  width: 100%;
+  margin-top: 12px;
+}
+
+footer {
+  text-align: center;
+  color: #8290a9;
+  font-size: 12px;
+  padding: 18px;
+}
+
+@media(max-width:560px) {
+  .row { grid-template-columns: 1fr; }
+  .hero h2 { font-size: 23px; }
+  .wrap { padding: 17px 12px 30px; }
+  .card { padding: 15px; }
+}
+</style>
+</head>
+
+<body>
+<main class="wrap">
+
+<header class="brand">
+  <div class="logo">🎙</div>
+  <div>
+    <h1>AI Announcement Studio</h1>
+    <p>Apni script ko announcement mein badlein</p>
+  </div>
+</header>
+
+<section class="hero">
+  <span class="tag">VOICE • SCRIPT • ANNOUNCEMENT</span>
+  <h2>Apni awaaz mein professional announcement</h2>
+  <p>
+    Voice sample, script aur language ek jagah manage karein.
+    Real voice cloning ke liye secure backend/API connect karna hoga.
+  </p>
+</section>
+
+<!-- VOICE SAMPLE -->
+
+<section class="card">
+  <h3 class="step">
+    <span class="num">1</span>
+    Voice sample
+  </h3>
+
+  <label for="voiceFile">Apni voice recording upload karein</label>
+  <input id="voiceFile" type="file" accept="audio/*">
+
+  <div class="row">
+    <button class="btn secondary" id="recordBtn">
+      ● Recording shuru karein
+    </button>
+
+    <button class="btn secondary" id="stopBtn" disabled>
+      ■ Recording rokein
+    </button>
+  </div>
+
+  <audio id="samplePlayer" class="audio" controls hidden></audio>
+
+  <p class="fine">
+    Sample abhi server par upload nahi hota.
+    Save voice profile ka button bhi actual AI voice clone nahi banata.
+  </p>
+
+  <button class="btn blue" id="saveVoice">
+    Voice sample select karein
+  </button>
+
+  <div class="status" id="voiceStatus" role="status">
+    Abhi koi sample select nahi hua.
+  </div>
+</section>
+
+<!-- ANNOUNCEMENT SCRIPT -->
+
+<section class="card">
+  <h3 class="step">
+    <span class="num">2</span>
+    Announcement script
+  </h3>
+
+  <label for="script">Jo bulwana hai woh likhein</label>
+
+  <textarea id="script"
+    placeholder="Jaise: Kripya dhyan dein, hamari dukaan ab khul chuki hai..."></textarea>
+
+  <div class="row">
+    <div>
+      <label for="sourceLang">Script ki language</label>
+      <select id="sourceLang">
+        <option value="hi">Hindi</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="targetLang">Output language</label>
+      <select id="targetLang">
+        <option value="hi-IN">Hindi</option>
+        <option value="en-IN">English</option>
+      </select>
+    </div>
+  </div>
+
+  <label for="style">Announcement style</label>
+
+  <select id="style">
+    <option>Professional and clear</option>
+    <option>Warm and welcoming</option>
+    <option>Urgent public announcement</option>
+    <option>Shop / promotional announcement</option>
+  </select>
+
+  <button class="btn" id="generateBtn">
+    Announcement preview chalayein
+  </button>
+
+  <div class="status" id="genStatus" role="status">
+    Preview browser ki available synthetic voice se chalega,
+    cloned voice se nahi.
+  </div>
+
+  <audio id="outputPlayer" class="audio" controls hidden></audio>
+
+  <button class="btn secondary" id="downloadBtn" disabled>
+    Generated audio download
+  </button>
+
+  <p class="fine">
+    Is demo mein Hindi-to-English translation aur actual AI voice cloning
+    connect nahi hai. Browser speech preview device ki available voice use karta hai.
+  </p>
+</section>
+
+<!-- PRIVACY -->
+
+<section class="card">
+  <h3 class="step">
+    <span class="num">🔒</span>
+    Privacy aur security
+  </h3>
+
+  <p class="fine">
+    Real launch ke liye login, server-side ownership checks,
+    private storage, consent verification, rate limits aur deletion
+    controls zaroori hain. API key ya private voice samples GitHub par
+    upload na karein.
+  </p>
+
+  <div class="notice">
+    Kisi aur ki awaaz clone karne se pehle uski permission lein.
+    Is HTML file ko online publish karne par iska code public hoga.
+  </div>
+</section>
+
+<footer>
+  AI Announcement Studio · Frontend demo
+</footer>
+
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+let recorder = null;
+let chunks = [];
+let recordedBlob = null;
+let selectedBlob = null;
+let stream = null;
+
+const voiceFile = $("voiceFile");
+const samplePlayer = $("samplePlayer");
+
+// Upload voice sample
+voiceFile.addEventListener("change", () => {
+  const file = voiceFile.files[0];
+
+  if (!file) return;
+
+  selectedBlob = file;
+  samplePlayer.src = URL.createObjectURL(file);
+  samplePlayer.hidden = false;
+
+  $("voiceStatus").textContent =
+    "Sample selected: " + file.name +
+    " (abhi private backend par save nahi hua).";
+});
+
+// Start voice recording
+$("recordBtn").addEventListener("click", async () => {
+  if (
+    !navigator.mediaDevices?.getUserMedia ||
+    !window.MediaRecorder
+  ) {
+    $("voiceStatus").textContent =
+      "Is browser mein recording supported nahi hai. Audio file upload karein.";
+    return;
+  }
+
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: true
+    });
+
+    chunks = [];
+    recorder = new MediaRecorder(stream);
+
+    recorder.ondataavailable = event => {
+      if (event.data.size) {
+        chunks.push(event.data);
+      }
+    };
+
+    recorder.onstop = () => {
+      recordedBlob = new Blob(chunks, {
+        type: recorder.mimeType || "audio/webm"
+      });
+
+      selectedBlob = recordedBlob;
+      samplePlayer.src = URL.createObjectURL(recordedBlob);
+      samplePlayer.hidden = false;
+
+      $("voiceStatus").textContent =
+        "Recording ready hai. Yeh sirf browser session mein hai.";
+
+      stream.getTracks().forEach(track => track.stop());
+    };
+
+    recorder.start();
+
+    $("recordBtn").disabled = true;
+    $("stopBtn").disabled = false;
+    $("voiceStatus").textContent = "Recording chal rahi hai...";
+  } catch (error) {
+    $("voiceStatus").textContent =
+      "Microphone permission nahi mili. Permission dein ya audio file upload karein.";
+  }
+});
+
+// Stop recording
+$("stopBtn").addEventListener("click", () => {
+  if (recorder && recorder.state !== "inactive") {
+    recorder.stop();
+  }
+
+  $("recordBtn").disabled = false;
+  $("stopBtn").disabled = true;
+});
+
+// Select voice sample
+$("saveVoice").addEventListener("click", () => {
+  $("voiceStatus").textContent = selectedBlob
+    ? "Sample is page session mein select hai. Actual voice profile ke liye secure backend/API chahiye."
+    : "Pehle audio sample upload ya record karein.";
+});
+
+// Announcement speech preview
+$("generateBtn").addEventListener("click", () => {
+  const text = $("script").value.trim();
+
+  if (!text) {
+    $("genStatus").textContent =
+      "Pehle announcement script likhein.";
+    return;
+  }
+
+  if (!("speechSynthesis" in window)) {
+    $("genStatus").textContent =
+      "Is browser mein speech preview available nahi hai.";
+    return;
+  }
+
+  speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = $("targetLang").value;
+
+  const voices = speechSynthesis.getVoices();
+
+  const language = utterance.lang.toLowerCase();
+  const shortLanguage = language.split("-")[0];
+
+  const match =
+    voices.find(voice =>
+      voice.lang.toLowerCase() === language
+    ) ||
+    voices.find(voice =>
+      voice.lang.toLowerCase().startsWith(shortLanguage)
+    );
+
+  if (match) {
+    utterance.voice = match;
+  }
+
+  utterance.rate =
+    $("style").value.includes("Urgent") ? 1.03 : 0.9;
+
+  utterance.pitch = 1;
+
+  utterance.onstart = () => {
+    $("genStatus").textContent =
+      "Browser speech preview chal raha hai. Yeh cloned voice ya translated output nahi hai.";
+  };
+
+  utterance.onerror = () => {
+    $("genStatus").textContent =
+      "Preview nahi chal saka. Browser ki sound/voice settings check karein.";
+  };
+
+  utterance.onend = () => {
+    $("genStatus").textContent =
+      "Preview complete. Real cloned audio aur download ke liye AI backend connect karna hoga.";
+  };
+
+  speechSynthesis.speak(utterance);
+});
+
+// Download placeholder
+$("downloadBtn").addEventListener("click", () => {
+  alert(
+    "Is demo mein generated audio file create nahi hoti. Download ke liye backend se generated audio URL connect karna hoga."
+  );
+});
+</script>
+
+</body>
+  </html>
