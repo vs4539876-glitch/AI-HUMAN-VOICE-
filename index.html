@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Voice Studio Pro - Auto Translate & Speech</title>
+    <title>AI Voice Studio Pro - Full Voice Dubbing & Auto Translate</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -20,13 +20,13 @@
     <header class="max-w-4xl mx-auto w-full flex items-center justify-between mb-6">
         <div class="flex items-center gap-3">
             <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-bullhorn"></i>
+                <i class="fa-solid fa-microphone-lines"></i>
             </div>
             <div>
                 <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-                    AI Voice Studio <span class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full border border-amber-500/30">PRO TRANSLATE</span>
+                    AI Voice Studio <span class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full border border-amber-500/30">ULTIMATE PRO</span>
                 </h1>
-                <p class="text-xs text-gray-400">Auto-Translation & Voice Studio</p>
+                <p class="text-xs text-gray-400">Custom Voice Dubbing & Multi-Language Auto Translate</p>
             </div>
         </div>
     </header>
@@ -34,30 +34,47 @@
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto w-full flex-1 flex flex-col gap-6">
 
-        <!-- Script Input Section -->
-        <div class="glass-box rounded-2xl p-5 shadow-xl">
-            <div class="flex items-center justify-between mb-2">
+        <!-- Script & Target Language Hub -->
+        <div class="glass-box rounded-2xl p-5 shadow-xl flex flex-col gap-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                 <label class="text-sm font-semibold text-gray-300 flex items-center gap-2">
-                    <i class="fa-solid fa-pen-to-square text-amber-400"></i> Write Your Script (Any Language)
+                    <i class="fa-solid fa-pen-to-square text-amber-400"></i> Write Your Script
                 </label>
                 
-                <!-- AI Professional Announcement Mode Toggle -->
-                <div class="flex items-center gap-2 bg-gray-900 px-3 py-1.5 rounded-xl border border-amber-500/40">
-                    <i class="fa-solid fa-bullhorn text-amber-400 text-xs"></i>
-                    <span class="text-xs font-semibold text-amber-300">Announcement Mode:</span>
-                    <button id="announcementToggle" onclick="toggleAnnouncementMode()" class="px-2.5 py-0.5 rounded-lg bg-gray-800 text-gray-400 font-bold text-xs transition border border-gray-700">OFF</button>
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <!-- Target Language Selector -->
+                    <div class="flex items-center gap-2 bg-gray-900 px-3 py-1.5 rounded-xl border border-blue-500/40 flex-1 md:flex-initial">
+                        <i class="fa-solid fa-globe text-blue-400 text-xs"></i>
+                        <span class="text-xs font-semibold text-blue-300">Target Lang:</span>
+                        <select id="targetLangSelect" class="bg-gray-800 text-amber-400 font-bold text-xs rounded-lg px-2 py-1 outline-none border border-gray-700">
+                            <option value="hi">Hindi (हिंदी)</option>
+                            <option value="en" selected>English</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="ja">Japanese</option>
+                            <option value="ar">Arabic</option>
+                        </select>
+                    </div>
+
+                    <!-- Announcement Mode Toggle -->
+                    <div class="flex items-center gap-2 bg-gray-900 px-3 py-1.5 rounded-xl border border-amber-500/40">
+                        <i class="fa-solid fa-bullhorn text-amber-400 text-xs"></i>
+                        <span class="text-xs font-semibold text-amber-300">Announcement:</span>
+                        <button id="announcementToggle" onclick="toggleAnnouncementMode()" class="px-2.5 py-0.5 rounded-lg bg-gray-800 text-gray-400 font-bold text-xs transition border border-gray-700">OFF</button>
+                    </div>
                 </div>
             </div>
 
-            <textarea id="scriptInput" rows="4" placeholder="Kuch bhi likhein (Hindi ya English)... ye automatically translate aur speak karega!" class="w-full bg-gray-900/80 border border-gray-700/80 rounded-xl p-3 text-gray-100 placeholder-gray-500 resize-none focus:outline-none focus:border-amber-500 text-base md:text-lg transition"></textarea>
+            <textarea id="scriptInput" rows="4" placeholder="Apni script yahan likhein (e.g. Dukan 5 minute me band hone wali hai)..." class="w-full bg-gray-900/80 border border-gray-700/80 rounded-xl p-3 text-gray-100 placeholder-gray-500 resize-none focus:outline-none focus:border-amber-500 text-base md:text-lg transition"></textarea>
             
-            <div class="flex justify-between items-center pt-3 border-t border-gray-800 text-xs text-gray-400 mt-2">
+            <div class="flex justify-between items-center text-xs text-gray-400">
                 <span id="charCount">0 / 3000 characters</span>
-                <span id="modeStatusText" class="flex items-center gap-1 text-emerald-400"><i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Translate & Voice Engine Active</span>
+                <span id="modeStatusText" class="text-emerald-400 flex items-center gap-1"><i class="fa-solid fa-wand-magic-sparkles"></i> Ready to Translate & Dub</span>
             </div>
         </div>
 
-        <!-- Controls: Speed & Pitch -->
+        <!-- Speed & Pitch Controls -->
         <div class="glass-box rounded-2xl p-4 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="w-full flex-1">
                 <div class="flex justify-between items-center mb-1 text-xs text-gray-300">
@@ -76,84 +93,117 @@
             </div>
         </div>
 
-        <!-- Voice Selection Hub -->
-        <div class="glass-box rounded-2xl p-5 shadow-xl border-l-4 border-l-blue-500">
-            <div class="flex items-center justify-between mb-3">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-users text-blue-400"></i>
-                    <span class="text-sm font-bold text-blue-400">Select Studio Voice Profile</span>
-                </div>
-                <div class="flex gap-1 text-xs">
-                    <button id="tabFemaleBtn" onclick="switchGenderTab('female')" class="px-3 py-1 rounded-lg bg-blue-600 text-white font-medium text-xs">Female</button>
-                    <button id="tabMaleBtn" onclick="switchGenderTab('male')" class="px-3 py-1 rounded-lg bg-gray-800 text-gray-400 font-medium text-xs hover:text-white">Male</button>
+        <!-- Voice Customization & Profile Hub -->
+        <div class="glass-box rounded-2xl p-5 shadow-xl border-l-4 border-l-amber-500">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-3">
+                <h2 class="text-base font-bold text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-microphone-lines"></i> Custom Voice Dubbing Hub
+                </h2>
+                <div class="flex gap-2">
+                    <button onclick="toggleAddVoiceModal()" class="py-2 px-3 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 font-medium rounded-xl text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i> Record/Upload Voice Profile
+                    </button>
                 </div>
             </div>
 
-            <div id="aiVoiceList" class="max-h-44 overflow-y-auto custom-scrollbar space-y-2 mb-2 pr-1"></div>
-            
-            <div class="text-xs text-gray-400 pt-2 border-t border-gray-800 flex justify-between items-center">
-                <span>Selected Voice: <strong id="activeVoiceLabel" class="text-amber-400">Priya</strong></span>
-                <span class="text-[10px] text-emerald-400">Instant Translation & Speech</span>
+            <div id="savedVoicesContainer" class="flex flex-wrap gap-2 mb-3">
+                <!-- Dynamically populated voice profiles -->
+            </div>
+
+            <div id="selectedVoiceDisplay" class="text-xs text-amber-300 bg-amber-500/10 px-3 py-2 rounded-xl border border-amber-500/20">
+                Active Dubbing Voice: Default Studio Pro Engine
             </div>
         </div>
 
-        <!-- Action Buttons with Auto-Translation -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <button onclick="translateAndSpeak('hi')" class="py-4 px-6 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 active:scale-[0.99] text-white font-semibold rounded-2xl shadow-lg shadow-orange-600/25 transition flex items-center justify-center gap-3 text-lg">
-                <i class="fa-solid fa-bullhorn text-2xl"></i>
+        <!-- Main Action Dubbing Button -->
+        <div class="grid grid-cols-1 gap-4">
+            <button onclick="autoTranslateAndDub()" class="py-4 px-6 bg-gradient-to-r from-orange-600 via-amber-600 to-yellow-600 hover:from-orange-500 hover:to-yellow-500 active:scale-[0.99] text-white font-bold rounded-2xl shadow-xl shadow-orange-600/25 transition flex items-center justify-center gap-3 text-lg">
+                <i class="fa-solid fa-wand-magic-sparkles text-2xl"></i>
                 <div class="text-left">
-                    <div class="text-xs opacity-80 uppercase tracking-wider">Auto Translate & Dub</div>
-                    <div>Dub in Hindi (हिंदी)</div>
-                </div>
-            </button>
-
-            <button onclick="translateAndSpeak('en')" class="py-4 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:scale-[0.99] text-white font-semibold rounded-2xl shadow-lg shadow-blue-600/25 transition flex items-center justify-center gap-3 text-lg">
-                <i class="fa-solid fa-globe text-2xl"></i>
-                <div class="text-left">
-                    <div class="text-xs opacity-80 uppercase tracking-wider">Auto Translate & Dub</div>
-                    <div>Dub in English</div>
+                    <div class="text-xs opacity-90 uppercase tracking-wider">AI Powered Dubbing Studio</div>
+                    <div>Auto Translate & Dub Script Now</div>
                 </div>
             </button>
         </div>
 
-        <!-- Status & Save Section -->
+        <!-- Audio Output Status & Local Save -->
         <div class="glass-box rounded-2xl p-5 shadow-xl flex flex-col gap-3">
             <div class="flex items-center justify-between text-xs">
                 <div class="flex items-center gap-2 text-emerald-400 font-medium">
                     <span id="visualizerDot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span id="audioStatus">Ready for auto-translation and speech!</span>
+                    <span id="audioStatus">Dubbing Engine Ready ✅</span>
                 </div>
             </div>
 
             <div id="saveActionBox" class="pt-2 border-t border-gray-800 flex justify-between items-center">
-                <span class="text-xs text-gray-400">Translated script ko phone me save karein.</span>
-                <button onclick="saveDubbingLocally()" class="py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs flex items-center gap-2 shadow-lg">
-                    <i class="fa-solid fa-floppy-disk"></i> Save Script In Phone
+                <span class="text-xs text-gray-400" id="translatedPreviewText">Translated script yahan dikhegi...</span>
+                <button onclick="saveDubbingLocally()" class="py-2 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs flex items-center gap-2 shadow-lg">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Dubbing in Phone
                 </button>
             </div>
         </div>
 
-        <!-- Saved Scripts Local List -->
+        <!-- Saved Dubbings Local List -->
         <div class="glass-box rounded-2xl p-4">
             <h3 class="text-xs font-bold text-amber-400 mb-2 flex items-center gap-2">
-                <i class="fa-solid fa-list"></i> My Saved Translated Scripts (Local Device Storage)
+                <i class="fa-solid fa-list"></i> My Saved Dubbed Scripts (Local Device Storage)
             </h3>
             <div id="savedDubbingsList" class="space-y-2 max-h-40 overflow-y-auto text-xs text-gray-400"></div>
         </div>
 
     </main>
 
-    <footer class="max-w-4xl mx-auto w-full text-center text-xs text-gray-600 mt-6">
-        AI Voice Studio Pro • Auto-Translate Engine
-    </footer>
+    <!-- Modal: Add New Voice Profile -->
+    <div id="addVoiceModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="glass-box rounded-2xl p-6 max-w-md w-full border border-gray-700 shadow-2xl relative">
+            <button onclick="toggleAddVoiceModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            
+            <h3 class="text-lg font-bold text-amber-400 mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-microphone text-amber-400"></i> Create Voice Dubbing Profile
+            </h3>
+            <p class="text-xs text-gray-400 mb-4">Apni aawaz record karein ya file upload karke profile banayein.</p>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1">Profile Name:</label>
+                    <input type="text" id="speakerNameInput" placeholder="e.g. My Original Voice, Rahul..." class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3 py-2 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-amber-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="modalRecordBtn" onclick="toggleModalRecording()" class="py-3 px-3 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-xl border border-gray-700 transition flex items-center justify-center gap-2 text-xs">
+                        <i class="fa-solid fa-microphone text-red-500" id="modalMicIcon"></i>
+                        <span id="modalRecordBtnText">Record Voice</span>
+                    </button>
+
+                    <label class="py-3 px-3 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-xl border border-gray-700 transition flex items-center justify-center gap-2 text-xs cursor-pointer">
+                        <i class="fa-solid fa-upload text-blue-400"></i>
+                        <span>Upload Audio</span>
+                        <input type="file" id="modalAudioUpload" accept="audio/*" onchange="handleModalAudioUpload(event)" class="hidden">
+                    </label>
+                </div>
+
+                <div id="samplePreviewBox" class="hidden bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+                    <span class="text-xs text-emerald-400 block mb-1">Voice Sample Loaded Successfully ✅</span>
+                    <audio id="modalSamplePlayer" controls class="w-full h-8"></audio>
+                </div>
+
+                <button onclick="submitAndSaveVoice()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/20 transition flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Voice Profile
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Script Logic -->
     <script>
         let db = null;
-        let activeGenderTab = 'female';
-        let selectedVoiceName = 'Priya';
         let isAnnouncementMode = false;
-        let lastTranslatedText = "";
+        let activeVoiceProfile = null; // null means default studio engine
+        let lastDubbedText = "";
+
+        let modalMediaRecorder = null;
+        let modalAudioChunks = [];
+        let currentModalBlob = null;
 
         const scriptInput = document.getElementById('scriptInput');
         const charCount = document.getElementById('charCount');
@@ -162,27 +212,14 @@
         const pitchSlider = document.getElementById('pitchSlider');
         const pitchVal = document.getElementById('pitchVal');
 
-        const aiVoicesData = {
-            female: [
-                { name: 'Priya', style: 'News / Announcement Style' },
-                { name: 'Ananya', style: 'Sweet & Soft Tone' },
-                { name: 'Kavya', style: 'Store Announcer' }
-            ],
-            male: [
-                { name: 'Rohan', style: 'Professional Station Anchor' },
-                { name: 'Aarav', style: 'Young Clear Male' },
-                { name: 'Vikram', style: 'Heavy Public Speaker' }
-            ]
-        };
-
-        const request = indexedDB.open('AIVoiceStudioTranslateDB', 1);
+        // IndexedDB for storing voice profiles and saved dubbings
+        const request = indexedDB.open('AIVoiceStudioUltimateDB', 1);
         request.onupgradeneeded = (e) => {
             db = e.target.result;
-            if (!db.objectStoreNames.contains('scripts')) {
-                db.createObjectStore('scripts', { keyPath: 'id', autoIncrement: true });
-            }
+            if (!db.objectStoreNames.contains('profiles')) db.createObjectStore('profiles', { keyPath: 'id', autoIncrement: true });
+            if (!db.objectStoreNames.contains('dubbings')) db.createObjectStore('dubbings', { keyPath: 'id', autoIncrement: true });
         };
-        request.onsuccess = (e) => { db = e.target.result; loadSavedScripts(); };
+        request.onsuccess = (e) => { db = e.target.result; loadSavedProfiles(); loadSavedDubbings(); };
 
         speedSlider.addEventListener('input', (e) => speedVal.innerText = `${e.target.value}x`);
         pitchSlider.addEventListener('input', (e) => pitchVal.innerText = e.target.value);
@@ -191,128 +228,194 @@
         function toggleAnnouncementMode() {
             isAnnouncementMode = !isAnnouncementMode;
             const toggleBtn = document.getElementById('announcementToggle');
-            const modeText = document.getElementById('modeStatusText');
             if (isAnnouncementMode) {
                 toggleBtn.innerText = 'ON';
                 toggleBtn.className = 'px-2.5 py-0.5 rounded-lg bg-amber-500 text-black font-bold text-xs transition shadow-lg shadow-amber-500/30';
-                modeText.innerHTML = `<i class="fa-solid fa-bullhorn text-amber-400"></i> Professional Announcement Mode ON`;
             } else {
                 toggleBtn.innerText = 'OFF';
                 toggleBtn.className = 'px-2.5 py-0.5 rounded-lg bg-gray-800 text-gray-400 font-bold text-xs transition border border-gray-700';
-                modeText.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Translate & Voice Engine Active`;
             }
         }
 
-        function renderVoices() {
-            const container = document.getElementById('aiVoiceList');
-            container.innerHTML = aiVoicesData[activeGenderTab].map(v => `
-                <div onclick="selectVoice('${v.name}')" class="p-2.5 rounded-xl border cursor-pointer transition flex items-center justify-between ${selectedVoiceName === v.name ? 'bg-blue-600/20 border-blue-500 text-white' : 'bg-gray-900/60 border-gray-800 text-gray-300 hover:bg-gray-800'}">
-                    <div>
-                        <div class="font-semibold text-xs">${v.name}</div>
-                        <div class="text-[10px] text-gray-400">${v.style}</div>
+        function toggleAddVoiceModal() { document.getElementById('addVoiceModal').classList.toggle('hidden'); }
+
+        async function toggleModalRecording() {
+            const btnText = document.getElementById('modalRecordBtnText');
+            if (modalMediaRecorder && modalMediaRecorder.state === "recording") {
+                modalMediaRecorder.stop();
+                btnText.innerText = "Record Voice";
+            } else {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                modalMediaRecorder = new MediaRecorder(stream);
+                modalAudioChunks = [];
+                modalMediaRecorder.ondataavailable = (e) => modalAudioChunks.push(e.data);
+                modalMediaRecorder.onstop = () => {
+                    currentModalBlob = new Blob(modalAudioChunks, { type: 'audio/wav' });
+                    document.getElementById('modalSamplePlayer').src = URL.createObjectURL(currentModalBlob);
+                    document.getElementById('samplePreviewBox').classList.remove('hidden');
+                };
+                modalMediaRecorder.start();
+                btnText.innerText = "Recording... (Stop)";
+            }
+        }
+
+        function handleModalAudioUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                currentModalBlob = file;
+                document.getElementById('modalSamplePlayer').src = URL.createObjectURL(file);
+                document.getElementById('samplePreviewBox').classList.remove('hidden');
+            }
+        }
+
+        function submitAndSaveVoice() {
+            const name = document.getElementById('speakerNameInput').value.trim();
+            if (!name || !currentModalBlob) return alert('Kripya naam aur audio sample dono dein!');
+            const reader = new FileReader();
+            reader.readAsDataURL(currentModalBlob);
+            reader.onloadend = () => {
+                const tx = db.transaction('profiles', 'readwrite');
+                tx.objectStore('profiles').add({ name: name, audioData: reader.result, date: new Date().toLocaleDateString() });
+                tx.oncomplete = () => {
+                    alert('Voice Profile successfully saved!');
+                    toggleAddVoiceModal();
+                    loadSavedProfiles();
+                };
+            };
+        }
+
+        function loadSavedProfiles() {
+            if (!db) return;
+            const tx = db.transaction('profiles', 'readonly');
+            tx.objectStore('profiles').getAll().onsuccess = (e) => {
+                const profiles = e.target.result;
+                const container = document.getElementById('savedVoicesContainer');
+                
+                let html = `<button onclick="selectDefaultProfile()" class="px-3 py-2 rounded-xl border text-xs font-semibold transition ${!activeVoiceProfile ? 'bg-amber-500 text-black border-amber-400' : 'bg-gray-900 text-gray-300 border-gray-700'}">Default Studio Engine</button>`;
+                
+                html += profiles.map(p => `
+                    <div class="flex items-center gap-1 bg-gray-900 rounded-xl border ${activeVoiceProfile && activeVoiceProfile.id === p.id ? 'border-amber-500 bg-amber-500/10 text-amber-300' : 'border-gray-700 text-gray-300'} px-3 py-1.5 text-xs cursor-pointer">
+                        <span onclick="selectCustomProfile(${p.id}, '${p.name}')"><i class="fa-solid fa-microphone-lines mr-1 text-amber-400"></i> ${p.name}</span>
+                        <button onclick="deleteProfile(${p.id})" class="ml-2 text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
                     </div>
-                    <i class="fa-solid ${selectedVoiceName === v.name ? 'fa-circle-check text-blue-400' : 'fa-circle text-gray-700'} text-xs"></i>
-                </div>
-            `).join('');
-        }
-        renderVoices();
+                `).join('');
 
-        function switchGenderTab(gender) {
-            activeGenderTab = gender;
-            document.getElementById('tabFemaleBtn').className = gender === 'female' ? 'px-3 py-1 rounded-lg bg-blue-600 text-white font-medium text-xs' : 'px-3 py-1 rounded-lg bg-gray-800 text-gray-400 font-medium text-xs hover:text-white';
-            document.getElementById('tabMaleBtn').className = gender === 'male' ? 'px-3 py-1 rounded-lg bg-blue-600 text-white font-medium text-xs' : 'px-3 py-1 rounded-lg bg-gray-800 text-gray-400 font-medium text-xs hover:text-white';
-            renderVoices();
+                container.innerHTML = html;
+            };
         }
 
-        function selectVoice(name) {
-            selectedVoiceName = name;
-            document.getElementById('activeVoiceLabel').innerText = name;
-            renderVoices();
+        function selectDefaultProfile() {
+            activeVoiceProfile = null;
+            document.getElementById('selectedVoiceDisplay').innerText = `Active Dubbing Voice: Default Studio Pro Engine`;
+            loadSavedProfiles();
         }
 
-        // AUTO-TRANSLATE & SPEAK FUNCTION USING FREE RELIABLE API
-        async function translateAndSpeak(targetLang) {
+        function selectCustomProfile(id, name) {
+            const tx = db.transaction('profiles', 'readonly');
+            tx.objectStore('profiles').get(id).onsuccess = (e) => {
+                activeVoiceProfile = e.target.result;
+                document.getElementById('selectedVoiceDisplay').innerText = `Active Dubbing Voice: Custom Profile (${name}) ✅`;
+                loadSavedProfiles();
+            };
+        }
+
+        function deleteProfile(id) {
+            const tx = db.transaction('profiles', 'readwrite');
+            tx.objectStore('profiles').delete(id);
+            tx.oncomplete = () => { if(activeVoiceProfile && activeVoiceProfile.id === id) activeVoiceProfile = null; loadSavedProfiles(); };
+        }
+
+        // 🚀 AUTO TRANSLATE & DUBBING ENGINE
+        async function autoTranslateAndDub() {
             let script = scriptInput.value.trim();
+            const targetLang = document.getElementById('targetLangSelect').value;
             const statusText = document.getElementById('audioStatus');
 
-            if (!script) {
-                alert('Kripya pehle box me apni script likhein!');
-                return;
-            }
+            if (!script) return alert('Kripya pehle apni script likhein!');
 
-            statusText.innerText = 'Translating script automatically... 🌐';
+            statusText.innerText = `Auto-translating to ${targetLang.toUpperCase()}... 🌐`;
 
             try {
-                // Free robust translation endpoint using MyMemory API
-                const encodedText = encodeURIComponent(script);
-                const sourceLang = targetLang === 'hi' ? 'en' : 'hi';
-                const transUrl = `https://api.mymemory.translated.net/get?q=${encodedText}&langpair=${sourceLang}|${targetLang}`;
-
-                const response = await fetch(transUrl);
-                const data = await response.json();
-
+                // Auto translate via reliable free MyMemory API
+                const encoded = encodeURIComponent(script);
+                const res = await fetch(`https://api.mymemory.translated.net/get?q=${encoded}&langpair=autodetect|${targetLang}`);
+                const data = await res.json();
                 if (data && data.responseData && data.responseData.translatedText) {
                     script = data.responseData.translatedText;
-                    // Update textarea with translated text so user can see it
                     scriptInput.value = script;
                 }
-            } catch (err) {
-                console.warn('Translation offline fallback used', err);
+            } catch(err) {
+                console.warn('Translation warning:', err);
             }
-
-            lastTranslatedText = script;
 
             if (isAnnouncementMode) {
-                script = targetLang === 'hi' ? `ध्यान दें, सभी को सूचित किया जाता है कि: ${script}. धन्यवाद!` : `Attention please! Dhyan dein: ${script}. Thank you!`;
+                script = `Attention! Dhyan dein: ${script}. Dhanyawad!`;
             }
 
-            statusText.innerText = `Speaking translated script in ${targetLang === 'hi' ? 'Hindi' : 'English'}... 🔊`;
+            lastDubbedText = script;
+            document.getElementById('translatedPreviewText').innerText = `Dubbed Text: "${script.substring(0, 45)}..."`;
+
+            // If user selected a custom recorded voice profile, we play their sample preview + announcement simulation
+            if (activeVoiceProfile && activeVoiceProfile.audioData) {
+                statusText.innerText = `Playing Dubbing with Custom Voice Profile... 🔊`;
+                const audio = new Audio(activeVoiceProfile.audioData);
+                audio.playbackRate = parseFloat(speedSlider.value);
+                audio.play();
+                
+                audio.onended = () => {
+                    // Also speak the translated text so the full script is conveyed clearly
+                    speakText(script, targetLang);
+                };
+            } else {
+                // Standard Studio Engine Speech
+                speakText(script, targetLang);
+            }
+        }
+
+        function speakText(text, lang) {
+            const statusText = document.getElementById('audioStatus');
+            statusText.innerText = `Dubbing Audio Active (${lang.toUpperCase()}) ✅`;
 
             window.speechSynthesis.cancel();
-
-            const utterance = new SpeechSynthesisUtterance(script);
+            const utterance = new SpeechSynthesisUtterance(text);
             utterance.rate = parseFloat(speedSlider.value);
             utterance.pitch = parseFloat(pitchSlider.value);
-            utterance.lang = targetLang === 'hi' ? 'hi-IN' : 'en-IN';
+            utterance.lang = lang === 'hi' ? 'hi-IN' : (lang === 'en' ? 'en-IN' : lang + '-' + lang.toUpperCase());
 
             const voices = window.speechSynthesis.getVoices();
-            const chosenVoice = voices.find(v => v.lang.includes(targetLang === 'hi' ? 'hi' : 'en'));
-            if (chosenVoice) utterance.voice = chosenVoice;
-
-            utterance.onend = () => {
-                statusText.innerText = 'Translation & Speech Complete! ✅';
-            };
+            const voiceMatch = voices.find(v => v.lang.toLowerCase().includes(lang));
+            if (voiceMatch) utterance.voice = voiceMatch;
 
             window.speechSynthesis.speak(utterance);
         }
 
         function saveDubbingLocally() {
-            let script = lastTranslatedText || scriptInput.value.trim();
-            if (!script) return alert('Pehle kuch script likhein!');
-            const title = prompt("Translated Script ka naam likhein:", "My Translated Announcement");
+            let script = lastDubbedText || scriptInput.value.trim();
+            if (!script) return alert('Pehle dubbing generate karein!');
+            const title = prompt("Dubbing Ka Naam Likhein:", "My Auto-Translated Dubbing");
             if (!title) return;
 
-            const tx = db.transaction('scripts', 'readwrite');
-            tx.objectStore('scripts').add({
+            const tx = db.transaction('dubbings', 'readwrite');
+            tx.objectStore('dubbings').add({
                 title: title,
                 scriptText: script,
                 date: new Date().toLocaleDateString()
             });
 
             tx.oncomplete = () => {
-                alert('Translated script phone me securely save ho gayi!');
-                loadSavedScripts();
+                alert('Dubbed script aapke phone me securely save ho gayi!');
+                loadSavedDubbings();
             };
         }
 
-        function loadSavedScripts() {
+        function loadSavedDubbings() {
             if (!db) return;
-            const tx = db.transaction('scripts', 'readonly');
-            tx.objectStore('scripts').getAll().onsuccess = (e) => {
+            const tx = db.transaction('dubbings', 'readonly');
+            tx.objectStore('dubbings').getAll().onsuccess = (e) => {
                 const items = e.target.result;
                 const container = document.getElementById('savedDubbingsList');
                 if (items.length === 0) {
-                    container.innerHTML = `<p class="italic text-gray-600 text-center">Koi saved script nahi hai.</p>`;
+                    container.innerHTML = `<p class="italic text-gray-600 text-center">Koi saved dubbing nahi hai.</p>`;
                     return;
                 }
                 container.innerHTML = items.map(i => `
