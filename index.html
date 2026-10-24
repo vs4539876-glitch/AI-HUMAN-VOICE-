@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Voice Studio Pro - Secure & Fast</title>
+    <title>AI Voice Studio Pro - Script Speaker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -24,9 +24,9 @@
             </div>
             <div>
                 <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-                    AI Voice Studio <span class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full border border-amber-500/30">PRO STABLE</span>
+                    AI Voice Studio <span class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full border border-amber-500/30">PRO SCRIPT</span>
                 </h1>
-                <p class="text-xs text-gray-400">Professional Announcement & Local Audio Studio</p>
+                <p class="text-xs text-gray-400">Professional Script & Announcement Studio</p>
             </div>
         </div>
     </header>
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <textarea id="scriptInput" rows="4" placeholder="Apni announcement ya script yahan likhein... (e.g. Dukan 5 minute me band hone wali hai, sabhi billing counter par jayein...)" class="w-full bg-gray-900/80 border border-gray-700/80 rounded-xl p-3 text-gray-100 placeholder-gray-500 resize-none focus:outline-none focus:border-amber-500 text-base md:text-lg transition"></textarea>
+            <textarea id="scriptInput" rows="4" placeholder="Jo script aap bulwana chahte hain yahan likhein... (e.g. Hello friends hamara closing time ho raha hai)" class="w-full bg-gray-900/80 border border-gray-700/80 rounded-xl p-3 text-gray-100 placeholder-gray-500 resize-none focus:outline-none focus:border-amber-500 text-base md:text-lg transition"></textarea>
             
             <div class="flex justify-between items-center pt-3 border-t border-gray-800 text-xs text-gray-400 mt-2">
                 <span id="charCount">0 / 3000 characters</span>
@@ -79,7 +79,7 @@
         <!-- Voice Selection Hub -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            <!-- My Saved Cloned Voices Section -->
+            <!-- My Saved Custom Voices Section -->
             <div class="glass-box rounded-2xl p-5 shadow-xl flex flex-col justify-between border-l-4 border-l-amber-500">
                 <div>
                     <div class="flex items-center justify-between mb-3">
@@ -94,14 +94,14 @@
                             <i class="fa-solid fa-plus"></i> Add New Sample
                         </button>
                         <button onclick="toggleSelectVoiceDropdown()" class="py-2.5 px-3 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 font-medium rounded-xl transition text-xs flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-list"></i> Select Sample Voice
+                            <i class="fa-solid fa-list"></i> Select Voice Profile
                         </button>
                     </div>
 
                     <div id="savedVoicesDropdown" class="hidden bg-gray-900 border border-gray-700 rounded-xl p-3 max-h-40 overflow-y-auto custom-scrollbar space-y-2 mb-3"></div>
 
                     <div id="selectedVoiceDisplay" class="text-xs text-amber-300 bg-amber-500/10 px-3 py-2 rounded-xl border border-amber-500/20 mb-2">
-                        Active Sample: None (Using Built-In Studio Voice)
+                        Active Voice: Studio AI Voice (Default)
                     </div>
                 </div>
             </div>
@@ -135,16 +135,16 @@
             <button onclick="processAndSpeak('hi')" class="py-4 px-6 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 active:scale-[0.99] text-white font-semibold rounded-2xl shadow-lg shadow-orange-600/25 transition flex items-center justify-center gap-3 text-lg">
                 <i class="fa-solid fa-bullhorn text-2xl"></i>
                 <div class="text-left">
-                    <div class="text-xs opacity-80 uppercase tracking-wider">Stable Studio Engine</div>
-                    <div>Dub in Hindi (हिंदी)</div>
+                    <div class="text-xs opacity-80 uppercase tracking-wider">Studio Engine</div>
+                    <div>Speak Script in Hindi (हिंदी)</div>
                 </div>
             </button>
 
             <button onclick="processAndSpeak('en')" class="py-4 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:scale-[0.99] text-white font-semibold rounded-2xl shadow-lg shadow-blue-600/25 transition flex items-center justify-center gap-3 text-lg">
                 <i class="fa-solid fa-globe text-2xl"></i>
                 <div class="text-left">
-                    <div class="text-xs opacity-80 uppercase tracking-wider">Stable Studio Engine</div>
-                    <div>Dub in English</div>
+                    <div class="text-xs opacity-80 uppercase tracking-wider">Studio Engine</div>
+                    <div>Speak Script in English</div>
                 </div>
             </button>
         </div>
@@ -154,26 +154,22 @@
             <div class="flex items-center justify-between text-xs">
                 <div class="flex items-center gap-2 text-emerald-400 font-medium">
                     <span id="visualizerDot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 opacity-40"></span>
-                    <span id="audioStatus">Audio Engine Ready & Stable</span>
+                    <span id="audioStatus">Script Engine Ready ✅</span>
                 </div>
             </div>
-            
-            <audio id="outputAudioPlayer" controls class="w-full hidden"></audio>
 
-            <div id="saveActionBox" class="hidden grid grid-cols-2 gap-3 pt-2 border-t border-gray-800">
-                <button onclick="saveDubbingLocally()" class="py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-floppy-disk"></i> Save In Phone
+            <div id="saveActionBox" class="hidden pt-2 border-t border-gray-800 flex justify-between items-center">
+                <span class="text-xs text-amber-300">Script Successfully Processed!</span>
+                <button onclick="saveDubbingLocally()" class="py-2 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs flex items-center gap-2">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Script in Phone Storage
                 </button>
-                <a id="downloadBtn" download="my_dubbing.wav" class="py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-200 font-semibold rounded-xl text-xs flex items-center justify-center gap-2 text-center">
-                    <i class="fa-solid fa-download"></i> Download Audio
-                </a>
             </div>
         </div>
 
         <!-- Saved Dubbings Local List -->
         <div class="glass-box rounded-2xl p-4">
             <h3 class="text-xs font-bold text-amber-400 mb-2 flex items-center gap-2">
-                <i class="fa-solid fa-list"></i> My Saved Dubbings (Local Device Storage)
+                <i class="fa-solid fa-list"></i> My Saved Scripts & Dubbings (Local Device)
             </h3>
             <div id="savedDubbingsList" class="space-y-2 max-h-40 overflow-y-auto text-xs text-gray-400"></div>
         </div>
@@ -186,36 +182,36 @@
             <button onclick="toggleAddVoiceModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             
             <h3 class="text-lg font-bold text-amber-400 mb-1 flex items-center gap-2">
-                <i class="fa-solid fa-microphone text-amber-400"></i> Add New Voice Sample
+                <i class="fa-solid fa-microphone text-amber-400"></i> Add Voice Profile
             </h3>
-            <p class="text-xs text-gray-400 mb-4">Awaaz record karein ya file upload karke save karein.</p>
+            <p class="text-xs text-gray-400 mb-4">Awaaz ka naam dekar profile save karein.</p>
 
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-medium text-gray-300 mb-1">Speaker Name:</label>
+                    <label class="block text-xs font-medium text-gray-300 mb-1">Profile Name:</label>
                     <input type="text" id="speakerNameInput" placeholder="e.g. My Voice, Rahul..." class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3 py-2 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-amber-500">
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <button id="modalRecordBtn" onclick="toggleModalRecording()" class="py-3 px-3 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-xl border border-gray-700 transition flex items-center justify-center gap-2 text-xs">
                         <i class="fa-solid fa-microphone text-red-500" id="modalMicIcon"></i>
-                        <span id="modalRecordBtnText">Record Voice</span>
+                        <span id="modalRecordBtnText">Record Sample</span>
                     </button>
 
                     <label class="py-3 px-3 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-xl border border-gray-700 transition flex items-center justify-center gap-2 text-xs cursor-pointer">
                         <i class="fa-solid fa-upload text-blue-400"></i>
-                        <span>Select File</span>
+                        <span>Upload File</span>
                         <input type="file" id="modalAudioUpload" accept="audio/*" onchange="handleModalAudioUpload(event)" class="hidden">
                     </label>
                 </div>
 
                 <div id="samplePreviewBox" class="hidden bg-gray-900/60 p-3 rounded-xl border border-gray-800">
-                    <span class="text-xs text-emerald-400 block mb-1">Sample Captured Successfully ✅</span>
+                    <span class="text-xs text-emerald-400 block mb-1">Sample Profile Saved ✅</span>
                     <audio id="modalSamplePlayer" controls class="w-full h-8"></audio>
                 </div>
 
                 <button onclick="submitAndSaveVoice()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/20 transition flex items-center justify-center gap-2 text-sm">
-                    <i class="fa-solid fa-floppy-disk"></i> Save Voice Sample
+                    <i class="fa-solid fa-floppy-disk"></i> Save Profile
                 </button>
             </div>
         </div>
@@ -226,14 +222,13 @@
         let db = null;
         let selectedVoiceType = 'ai';
         let activeAiVoiceId = 'f1';
-        let activeClonedVoiceBlob = null;
         let activeGenderTab = 'female';
         let isAnnouncementMode = false;
         
         let modalMediaRecorder = null;
         let modalAudioChunks = [];
         let currentModalBlob = null;
-        let currentGeneratedAudioUrl = null;
+        let savedVoicesMemory = [];
 
         const scriptInput = document.getElementById('scriptInput');
         const charCount = document.getElementById('charCount');
@@ -255,7 +250,7 @@
             ]
         };
 
-        const request = indexedDB.open('AIVoiceStudioStableDB', 3);
+        const request = indexedDB.open('AIVoiceStudioScriptDB', 3);
         request.onupgradeneeded = (e) => {
             db = e.target.result;
             if (!db.objectStoreNames.contains('clonedVoices')) db.createObjectStore('clonedVoices', { keyPath: 'id', autoIncrement: true });
@@ -306,7 +301,7 @@
         function selectAiVoice(id, name) {
             activeAiVoiceId = id;
             selectedVoiceType = 'ai';
-            document.getElementById('selectedVoiceDisplay').innerText = `Active Sample: None (Using Studio Voice)`;
+            document.getElementById('selectedVoiceDisplay').innerText = `Active Voice: Studio AI Voice (${name})`;
             document.getElementById('activeVoiceLabel').innerText = name;
             renderAiVoices();
         }
@@ -318,7 +313,7 @@
             const btnText = document.getElementById('modalRecordBtnText');
             if (modalMediaRecorder && modalMediaRecorder.state === "recording") {
                 modalMediaRecorder.stop();
-                btnText.innerText = "Record Voice";
+                btnText.innerText = "Record Sample";
             } else {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 modalMediaRecorder = new MediaRecorder(stream);
@@ -345,14 +340,14 @@
 
         function submitAndSaveVoice() {
             const name = document.getElementById('speakerNameInput').value.trim();
-            if (!name || !currentModalBlob) return alert('Kripya naam aur voice sample dono dein!');
+            if (!name || !currentModalBlob) return alert('Kripya naam aur sample audio dein!');
             const reader = new FileReader();
             reader.readAsDataURL(currentModalBlob);
             reader.onloadend = () => {
                 const tx = db.transaction('clonedVoices', 'readwrite');
                 tx.objectStore('clonedVoices').add({ name: name, audioData: reader.result, date: new Date().toLocaleDateString() });
                 tx.oncomplete = () => {
-                    alert('Voice sample successfully saved!');
+                    alert('Voice Profile successfully saved!');
                     toggleAddVoiceModal();
                     loadSavedClonedVoices();
                 };
@@ -363,35 +358,26 @@
             if (!db) return;
             const tx = db.transaction('clonedVoices', 'readonly');
             tx.objectStore('clonedVoices').getAll().onsuccess = (e) => {
-                const voices = e.target.result;
-                document.getElementById('clonedCount').innerText = `${voices.length} Voices Saved`;
+                savedVoicesMemory = e.target.result;
+                document.getElementById('clonedCount').innerText = `${savedVoicesMemory.length} Voices Saved`;
                 const container = document.getElementById('savedVoicesDropdown');
-                if (voices.length === 0) {
-                    container.innerHTML = `<p class="text-xs text-gray-500 italic text-center">Koi voice saved nahi hai.</p>`;
+                if (savedVoicesMemory.length === 0) {
+                    container.innerHTML = `<p class="text-xs text-gray-500 italic text-center">Koi profile saved nahi hai.</p>`;
                     return;
                 }
-                container.innerHTML = voices.map(v => `
-                    <div onclick="selectClonedVoice(${v.id}, '${v.name}')" class="p-2 bg-gray-800 rounded-xl border border-gray-700 flex justify-between items-center cursor-pointer hover:bg-gray-700">
-                        <div class="font-semibold text-amber-300 text-xs"><i class="fa-solid fa-microphone-lines mr-1"></i> ${v.name}</div>
+                container.innerHTML = savedVoicesMemory.map(v => `
+                    <div onclick="selectCustomProfile('${v.name}')" class="p-2 bg-gray-800 rounded-xl border border-gray-700 flex justify-between items-center cursor-pointer hover:bg-gray-700">
+                        <div class="font-semibold text-amber-300 text-xs"><i class="fa-solid fa-user-shield mr-1"></i> ${v.name}</div>
                         <button onclick="event.stopPropagation(); deleteClonedVoice(${v.id})" class="text-red-400 hover:text-red-300 text-xs px-1.5 py-0.5"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `).join('');
             };
         }
 
-        function selectClonedVoice(id, name) {
-            const tx = db.transaction('clonedVoices', 'readonly');
-            tx.objectStore('clonedVoices').get(id).onsuccess = (e) => {
-                const v = e.target.result;
-                if (v) {
-                    fetch(v.audioData).then(res => res.blob()).then(blob => {
-                        activeClonedVoiceBlob = blob;
-                        selectedVoiceType = 'cloned';
-                        document.getElementById('selectedVoiceDisplay').innerText = `Active Sample: ${name} ✅ (Using Custom Voice)`;
-                        toggleSelectVoiceDropdown();
-                    });
-                }
-            };
+        function selectCustomProfile(name) {
+            selectedVoiceType = 'custom';
+            document.getElementById('selectedVoiceDisplay').innerText = `Active Voice: ${name} (Custom Profile)`;
+            toggleSelectVoiceDropdown();
         }
 
         function deleteClonedVoice(id) {
@@ -400,61 +386,52 @@
             tx.oncomplete = () => loadSavedClonedVoices();
         }
 
-        // STABLE LOCAL SPEECH & SYNTHESIS GENERATOR
-        async function processAndSpeak(lang) {
+        // SPEECH SYNTHESIS TO SPEAK EXACT SCRIPT TEXT
+        function processAndSpeak(lang) {
             let script = scriptInput.value.trim();
             const statusText = document.getElementById('audioStatus');
 
-            if (!script) return alert('Kripya kuch script likhein!');
+            if (!script) return alert('Kripya pehle apni script yahan likhein!');
 
             if (isAnnouncementMode) {
-                script = `Attention please! 🔔 ${script}. Thank you!`;
+                script = `Attention please! Dhyan dein: ${script}. Dhanyawad!`;
             }
 
-            statusText.innerText = 'Generating Dubbing Locally...';
+            statusText.innerText = 'Speaking Script... ✅';
 
-            if (selectedVoiceType === 'cloned' && activeClonedVoiceBlob) {
-                // Play custom recorded sample preview or synthesized blend
-                currentGeneratedAudioUrl = URL.createObjectURL(activeClonedVoiceBlob);
-                const player = document.getElementById('outputAudioPlayer');
-                player.src = currentGeneratedAudioUrl;
-                player.classList.remove('hidden');
-                player.play();
+            // Cancel any prior speech
+            window.speechSynthesis.cancel();
 
-                document.getElementById('downloadBtn').href = currentGeneratedAudioUrl;
-                document.getElementById('saveActionBox').classList.remove('hidden');
-                statusText.innerText = 'Custom Voice Dubbing Ready! ✅';
-            } else {
-                // High Quality Browser Speech Synthesis with Speed & Pitch
-                const utterance = new SpeechSynthesisUtterance(script);
-                utterance.rate = parseFloat(speedSlider.value);
-                utterance.pitch = parseFloat(pitchSlider.value);
-                utterance.lang = lang === 'hi' ? 'hi-IN' : 'en-IN';
-                
-                window.speechSynthesis.speak(utterance);
-                statusText.innerText = 'Studio Voice Playback Active ✅';
+            const utterance = new SpeechSynthesisUtterance(script);
+            utterance.rate = parseFloat(speedSlider.value);
+            utterance.pitch = parseFloat(pitchSlider.value);
+            utterance.lang = lang === 'hi' ? 'hi-IN' : 'en-IN';
 
-                // Create a dummy audio blob for local saving simulation
-                setTimeout(() => {
-                    currentGeneratedAudioUrl = URL.createObjectURL(new Blob([script], { type: 'text/plain' }));
-                    document.getElementById('saveActionBox').classList.remove('hidden');
-                }, 500);
+            // Try picking an Indian English or Hindi voice if available in browser
+            const voices = window.speechSynthesis.getVoices();
+            const matchingVoice = voices.find(v => v.lang.includes(lang === 'hi' ? 'hi' : 'en-IN') || v.lang.includes('IN'));
+            if (matchingVoice) {
+                utterance.voice = matchingVoice;
             }
+
+            window.speechSynthesis.speak(utterance);
+            document.getElementById('saveActionBox').classList.remove('hidden');
         }
 
         function saveDubbingLocally() {
-            if (!scriptInput.value.trim()) return;
-            const title = prompt("Dubbing Ka Naam Likhein:", "My Professional Announcement");
+            let script = scriptInput.value.trim();
+            if (!script) return;
+            const title = prompt("Script Dubbing Ka Naam:", "My Announcement Script");
             if (!title) return;
 
             const tx = db.transaction('dubbings', 'readwrite');
             tx.objectStore('dubbings').add({ 
                 title: title, 
-                scriptText: scriptInput.value.trim(),
+                scriptText: script,
                 date: new Date().toLocaleDateString() 
             });
             tx.oncomplete = () => {
-                alert('Dubbing aapke phone/browser storage me successfully save ho gayi!');
+                alert('Aapki script local phone storage me save ho gayi!');
                 loadSavedDubbings();
             };
         }
@@ -466,16 +443,16 @@
                 const files = e.target.result;
                 const container = document.getElementById('savedDubbingsList');
                 if(files.length === 0) {
-                    container.innerHTML = `<p class="italic text-gray-600 text-center">Koi saved dubbing nahi hai.</p>`;
+                    container.innerHTML = `<p class="italic text-gray-600 text-center">Koi saved script nahi hai.</p>`;
                     return;
                 }
                 container.innerHTML = files.map(f => `
                     <div class="p-2 bg-gray-900 rounded-xl border border-gray-800 flex justify-between items-center">
                         <div>
                             <div class="font-semibold text-amber-300">${f.title}</div>
-                            <div class="text-[10px] text-gray-500">${f.date} - ${f.scriptText.substring(0, 30)}...</div>
+                            <div class="text-[10px] text-gray-500">${f.date} - ${f.scriptText.substring(0, 35)}...</div>
                         </div>
-                        <button onclick="alert('Saved Script: ${f.scriptText}')" class="px-2.5 py-1 bg-amber-500/20 text-amber-400 rounded-lg text-xs">View</button>
+                        <button onclick="scriptInput.value = '${f.scriptText.replace(/'/g, "\\'")}'" class="px-2.5 py-1 bg-amber-500/20 text-amber-400 rounded-lg text-xs">Load Script</button>
                     </div>
                 `).join('');
             };
